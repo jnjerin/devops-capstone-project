@@ -61,6 +61,7 @@ def create_accounts():
 # LIST ALL ACCOUNTS
 ######################################################################
 
+
 @app.route("/accounts", methods=["GET"])
 def list_accounts():
     """
@@ -70,7 +71,7 @@ def list_accounts():
     app.logger.info("Request to list Accounts")
     # use the Account.all() method to retrieve all accounts
     # create a list of serialize() accounts
-    # log the number of accounts being returned in the list 
+    # log the number of accounts being returned in the list
     # return the list with a return code of status.HTTP_200_OK
     app.logger.info("Request to list Accounts")
     accounts = Account.all()
@@ -90,13 +91,12 @@ def get_accounts(account_id):
     This endpoint will read an Account based the account_id that is requested
     """
     app.logger.info("Request to read an Account with id: %s", account_id)
-
     # use the Account.find() method to find the account
     # abort() with a status.HTTP_404_NOT_FOUND if it cannot be found
     # return the serialize() version of the account with a return code of status.HTTP_200_OK
     account = Account.find(account_id)
     if not account:
-        abort(status.HTTP_404_NOT_FOUND, f"Account with id [{account_id}] could not be found.")   
+        abort(status.HTTP_404_NOT_FOUND, f"Account with id [{account_id}] could not be found.")
     return account.serialize(), status.HTTP_200_OK
 
 
@@ -121,7 +121,7 @@ def update_accounts(account_id):
         abort(status.HTTP_404_NOT_FOUND, f"Account with id [{account_id}] could not be found.")
     account.deserialize(request.get_json())
     account.update()
-    return account.serialize(), status.HTTP_200_OK #Return account as JSON
+    return account.serialize(), status.HTTP_200_OK  # Return account as JSON
 
 
 ######################################################################
@@ -141,7 +141,7 @@ def delete_accounts(account_id):
     account = Account.find(account_id)
     if account:
         account.delete()
-    return "", status.HTTP_204_NO_CONTENT #Returns empty string + 204 status code    
+    return "", status.HTTP_204_NO_CONTENT  # Return empty string + 204 status code
 
 
 ######################################################################
