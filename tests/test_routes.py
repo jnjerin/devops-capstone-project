@@ -162,6 +162,27 @@ class TestAccountService(TestCase):
 
 
 
-
+def test_update_account(self):
+        """It should Update an existing Account"""
+        # create an Account to update
+        # send a self.client.post() request to the BASE_URL with a json payload of test_account.serialize()
+        # assert that the resp.status_code is status.HTTP_201_CREATED
+        test_account = AccountFactory()
+        resp = self.client.post(BASE_URL, json=test_account.serialize())
+        self.assertEqual(resp.status_code, status.HTTP_201_CREATED)
+        
+        # update the account
+        # get the data from resp.get_json() as new_account
+        # change new_account["name"] to something known
+        # send a self.client.put() request to the BASE_URL with a json payload of new_account
+        # assert that the resp.status_code is status.HTTP_200_OK
+        # get the data from resp.get_json() as updated_account
+        # assert that the updated_account["name"] is whatever you changed it to
+        new_account = resp.get_json()
+        new_account["name"] = "Something Known"
+        resp = self.client.put(f"{BASE_URL}/{new_account['id']}", json=new_account)
+        self.assertEqual(resp.status_code, status.HTTP_200_OK)
+        updated_account = resp.get_json()
+        self.assertEqual(updated_account["name"], "Something Known")
 
 
